@@ -1,0 +1,33 @@
+
+falco:
+  json_output: true                     # Output in JSON
+  json_output_format: json             # Full JSON format
+  log_stderr: true                     # Logs to stderr
+  log_syslog: true                     # Logs to syslog
+  priority: debug                      # Log level (change to info or warning for prod)
+  buffer_size: 1024                    # Size of internal buffer
+  syscall_event_drops:
+    threshold: 0.1
+    actions:
+      - log
+      - alert
+
+rules_file:
+  - /etc/falco/falco_rules.yaml
+  - /etc/falco/falco_rules.local.yaml
+
+load_plugins: []
+plugins: []
+plugin_configs: []
+
+# Output to file (optional)
+file_output:
+  enabled: true
+  filename: /var/log/falco_events.log
+
+# gRPC server (optional for advanced integrations)
+grpc:
+  enabled: false
+
+# Kubernetes audit log support (disabled for now)
+k8s_audit_enabled: false
