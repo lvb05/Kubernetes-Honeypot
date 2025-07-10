@@ -1,0 +1,54 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore logs and runtime data
+*.log
+*.out
+*.err
+
+# Ignore Helm cache and releases
+*.tgz
+charts/
+Chart.lock
+
+# Ignore Kubernetes config and secrets (if any)
+kubeconfig
+*.crt
+*.key
+*.pem
+
+# Ignore local environments
+.env
+.env.local
+.env.*
+
+# Ignore editor/IDE configs
+.vscode/
+.idea/
+*.swp
+
+# Ignore compiled Python or other artifacts (if used in future)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore temporary files
+*.bak
+*.tmp
+*.old
+*~
+
+# Ignore Docker related
+docker-compose.override.yml
+*.tar
+*.img
+
+# Ignore dashboard uploads (optional: keep final JSON only)
+dashboards/*.bak.json
+dashboards/*.temp.json
+
+# Ignore sample logs you don't want to upload
+sample-logs/*.log
+sample-logs/*.jsonl
