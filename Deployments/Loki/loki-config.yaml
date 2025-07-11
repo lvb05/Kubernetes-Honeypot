@@ -1,4 +1,3 @@
-# deployments/loki/loki-config.yaml
 
 auth_enabled: false
 
