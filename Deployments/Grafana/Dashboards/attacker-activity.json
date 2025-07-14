@@ -1,0 +1,81 @@
+{
+  "id": null,
+  "uid": "attacker-activity",
+  "title": "Attacker Activity (Falco + Loki)",
+  "tags": ["falco", "honeypot", "security"],
+  "timezone": "browser",
+  "schemaVersion": 30,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "title": "Triggered Falco Rules",
+      "type": "table",
+      "datasource": "Loki",
+      "targets": [
+        {
+          "expr": "{job=\"falco\"} | json | line_format \"{{ .rule }}\"",
+          "format": "table"
+        }
+      ],
+      "interval": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 7 }
+    },
+    {
+      "title": "Most Triggered Rules",
+      "type": "stat",
+      "datasource": "Loki",
+      "targets": [
+        {
+          "expr": "count_over_time({job=\"falco\"} | json | unwrap rule [1m])",
+          "legendFormat": "{{rule}}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 8, "w": 6, "h": 5 }
+    },
+    {
+      "title": "Suspicious Commands",
+      "type": "table",
+      "datasource": "Loki",
+      "targets": [
+        {
+          "expr": "{job=\"falco\"} | json | line_format \"{{ .output }}\"",
+          "format": "table"
+        }
+      ],
+      "gridPos": { "x": 6, "y": 8, "w": 6, "h": 5 }
+    },
+    {
+      "title": "Top Triggering Containers",
+      "type": "stat",
+      "datasource": "Loki",
+      "targets": [
+        {
+          "expr": "topk(5, count_over_time({job=\"falco\"} | json | unwrap container.name [5m]))",
+          "legendFormat": "{{container.name}}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 14, "w": 6, "h": 5 }
+    },
+    {
+      "title": "Event Rate (per minute)",
+      "type": "timeseries",
+      "datasource": "Loki",
+      "targets": [
+        {
+          "expr": "rate({job=\"falco\"}[1m])",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "x": 6, "y": 14, "w": 6, "h": 5 }
+    }
+  ]
+}
